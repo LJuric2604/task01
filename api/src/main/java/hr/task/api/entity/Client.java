@@ -1,4 +1,4 @@
-package hr.task.api.model;
+package hr.task.api.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,12 +11,14 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Channel {
+public class Client implements PriceEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	private String name;
+	
+	private Integer price;
 
 }

@@ -25,6 +25,7 @@
 			<column name="name" type="VARCHAR(255)">
 				<constraints nullable="false" />
 			</column>
+			<column name="price" type="int" />
 		</createTable>
 	</changeSet>
 
@@ -37,6 +38,7 @@
 			<column name="name" type="VARCHAR(255)">
 				<constraints nullable="false" />
 			</column>
+			<column name="price" type="int" />
 		</createTable>
 	</changeSet>
 

@@ -1,13 +1,11 @@
-package hr.task.api.model;
-
-import java.util.Set;
+package hr.task.api.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -15,15 +13,18 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Person {
+public class PersonChannel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String name;
+	@ManyToOne
+	@JoinColumn(name = "person_id")
+	private Person person;
 	
-	@OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
-	private Set<PersonChannel> personChannels;
+	@ManyToOne
+	@JoinColumn(name = "channel_id")
+	private Channel channel;
 
 }
