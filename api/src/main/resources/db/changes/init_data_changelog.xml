@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
+	<changeSet id="add_person_data" author="ljuric">
+		<insert tableName="person">
+			<column name="name">P1</column>
+		</insert>
+		<insert tableName="person">
+			<column name="name">P2</column>
+		</insert>
+		<insert tableName="person">
+			<column name="name">P3</column>
+		</insert>
+		<insert tableName="person">
+			<column name="name">P4</column>
+		</insert>
+		<insert tableName="person">
+			<column name="name">P5</column>
+		</insert>
+	</changeSet>
+
+	<changeSet id="add_client_data" author="ljuric">
+		<insert tableName="client">
+			<column name="name">C1</column>
+		</insert>
+		<insert tableName="client">
+			<column name="name">C2</column>
+		</insert>
+		<insert tableName="client">
+			<column name="name">C3</column>
+		</insert>
+		<insert tableName="client">
+			<column name="name">C4</column>
+		</insert>
+		<insert tableName="client">
+			<column name="name">C5</column>
+		</insert>
+	</changeSet>
+
+	<changeSet id="add_channel_data" author="ljuric">
+		<insert tableName="channel">
+			<column name="name">SMS</column>
+		</insert>
+		<insert tableName="channel">
+			<column name="name">WhatsApp</column>
+		</insert>
+		<insert tableName="channel">
+			<column name="name">Viber</column>
+		</insert>
+	</changeSet>
+
+	<changeSet id="add_person_channel_data" author="ljuric">
+		<insert tableName="person_channel">
+			<column name="person_id"
+				valueComputed="( select id from person where name = 'P1' )" />
+			<column name="channel_id"
+				valueComputed="( select id from channel where name = 'SMS' )" />
+		</insert>
+		<insert tableName="person_channel">
+			<column name="person_id"
+				valueComputed="( select id from person where name = 'P1' )" />
+			<column name="channel_id"
+				valueComputed="( select id from channel where name = 'Viber' )" />
+
+		</insert>
+		<insert tableName="person_channel">
+			<column name="person_id"
+				valueComputed="( select id from person where name = 'P2' )" />
+			<column name="channel_id"
+				valueComputed="( select id from channel where name = 'SMS' )" />
+
+		</insert>
+		<insert tableName="person_channel">
+			<column name="person_id"
+				valueComputed="( select id from person where name = 'P2' )" />
+			<column name="channel_id"
+				valueComputed="( select id from channel where name = 'WhatsApp' )" />
+
+		</insert>
+		<insert tableName="person_channel">
+			<column name="person_id"
+				valueComputed="( select id from person where name = 'P3' )" />
+			<column name="channel_id"
+				valueComputed="( select id from channel where name = 'WhatsApp' )" />
+
+		</insert>
+		<insert tableName="person_channel">
+			<column name="person_id"
+				valueComputed="( select id from person where name = 'P4' )" />
+			<column name="channel_id"
+				valueComputed="( select id from channel where name = 'WhatsApp' )" />
+
+		</insert>
+		<insert tableName="person_channel">
+			<column name="person_id"
+				valueComputed="( select id from person where name = 'P4' )" />
+			<column name="channel_id"
+				valueComputed="( select id from channel where name = 'Viber' )" />
+		</insert>
+		<insert tableName="person_channel">
+			<column name="person_id"
+				valueComputed="( select id from person where name = 'P5' )" />
+			<column name="channel_id"
+				valueComputed="( select id from channel where name = 'SMS' )" />
+
+		</insert>
+		<insert tableName="person_channel">
+			<column name="person_id"
+				valueComputed="( select id from person where name = 'P5' )" />
+			<column name="channel_id"
+				valueComputed="( select id from channel where name = 'WhatsApp' )" />
+
+		</insert>
+		<insert tableName="person_channel">
+			<column name="person_id"
+				valueComputed="( select id from person where &quot;name&quot; = 'P5' )" />
+			<column name="channel_id"
+				valueComputed="( select id from channel where &quot;name&quot; = 'Viber' )" />
+		</insert>
+	</changeSet>
+
+</databaseChangeLog>

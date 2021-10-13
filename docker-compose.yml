@@ -1,0 +1,10 @@
+version: '3.9'
+services:
+  postgres-db:
+    image: postgres:13.4
+    container_name: database
+    ports:
+      - 5432:5432
+    restart: always
+    env_file:
+      - docker/postgres-db/postgres.env

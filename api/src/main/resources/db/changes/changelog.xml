@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
+	<changeSet id="1" author="ljuric">
+		<createTable tableName="person">
+			<column autoIncrement="true" name="id" type="BIGINT">
+				<constraints nullable="false" primaryKey="true"
+					primaryKeyName="pk_person" />
+			</column>
+			<column name="name" type="VARCHAR(50)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet id="2" author="ljuric">
+		<createTable tableName="channel">
+			<column autoIncrement="true" name="id" type="BIGINT">
+				<constraints nullable="false" primaryKey="true"
+					primaryKeyName="pk_channel" />
+			</column>
+			<column name="name" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet id="3" author="ljuric">
+		<createTable tableName="client">
+			<column autoIncrement="true" name="id" type="BIGINT">
+				<constraints nullable="false" primaryKey="true"
+					primaryKeyName="pk_client" />
+			</column>
+			<column name="name" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet id="4" author="ljuric">
+		<createTable tableName="person_channel">
+			<column autoIncrement="true" name="id" type="BIGINT">
+				<constraints nullable="false" primaryKey="true"
+					primaryKeyName="pk_person_channel" />
+			</column>
+			<column name="person_id" type="BIGINT">
+				<constraints nullable="false" />
+			</column>
+			<column name="channel_id" type="BIGINT">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<addForeignKeyConstraint
+			constraintName="fk_person_channel_person" baseColumnNames="person_id"
+			baseTableName="person_channel" referencedTableName="person"
+			referencedColumnNames="id" />
+		<addForeignKeyConstraint
+			constraintName="fk_person_channel_channel"
+			baseColumnNames="channel_id" baseTableName="person_channel"
+			referencedTableName="channel" referencedColumnNames="id" />
+	</changeSet>
+
+</databaseChangeLog>
