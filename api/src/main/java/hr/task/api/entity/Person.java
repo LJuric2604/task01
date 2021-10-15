@@ -20,10 +20,16 @@ public class Person {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	private String name;
-	
+
+	private String contactNumber;
+
 	@OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
 	private Set<PersonChannel> personChannels;
+
+	public Channel getMinimumCostChannel() {
+		return personChannels.stream().map(PersonChannel::getChannel).min(PriceEntity::compareTo).get();
+	}
 
 }

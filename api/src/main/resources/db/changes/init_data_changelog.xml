@@ -7,18 +7,23 @@
 	<changeSet id="add_person_data" author="ljuric">
 		<insert tableName="person">
 			<column name="name">P1</column>
+			<column name="contact_number">00385991111111</column>
 		</insert>
 		<insert tableName="person">
 			<column name="name">P2</column>
+			<column name="contact_number">091222222</column>
 		</insert>
 		<insert tableName="person">
 			<column name="name">P3</column>
+			<column name="contact_number">099333333</column>
 		</insert>
 		<insert tableName="person">
 			<column name="name">P4</column>
+			<column name="contact_number">092444444</column>
 		</insert>
 		<insert tableName="person">
 			<column name="name">P5</column>
+			<column name="contact_number">09555555</column>
 		</insert>
 	</changeSet>
 
@@ -43,12 +48,15 @@
 	<changeSet id="add_channel_data" author="ljuric">
 		<insert tableName="channel">
 			<column name="name">SMS</column>
+			<column name="api_path">http://localhost:8082/channel-api/mockups/sms</column>
 		</insert>
 		<insert tableName="channel">
 			<column name="name">WhatsApp</column>
+			<column name="api_path">http://localhost:8082/channel-api/mockups/whatsapp</column>
 		</insert>
 		<insert tableName="channel">
 			<column name="name">Viber</column>
+			<column name="api_path">http://localhost:8082/channel-api/mockups/viber</column>
 		</insert>
 	</changeSet>
 

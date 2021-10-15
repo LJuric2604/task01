@@ -1,0 +1,17 @@
+{"properties": [
+  {
+    "name": "sms.api.path",
+    "type": "java.lang.String",
+    "description": "A description for 'sms.api.path'"
+  },
+  {
+    "name": "whatsapp.api.path",
+    "type": "java.lang.String",
+    "description": "A description for 'whatsapp.api.path'"
+  },
+  {
+    "name": "viber.api.path",
+    "type": "java.lang.String",
+    "description": "A description for 'viber.api.path'"
+  }
+]}

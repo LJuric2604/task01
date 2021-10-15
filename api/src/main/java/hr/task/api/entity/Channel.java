@@ -1,5 +1,6 @@
 package hr.task.api.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,9 +19,12 @@ public class Channel implements PriceEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	private String name;
-	
+
 	private Integer price;
+
+	@Column(name = "api_path")
+	private String uri;
 
 }

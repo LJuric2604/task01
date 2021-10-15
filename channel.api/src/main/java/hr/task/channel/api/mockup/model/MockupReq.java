@@ -1,9 +1,14 @@
 package hr.task.channel.api.mockup.model;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public class MockupReq {
 
+	@NotNull
 	private String text;
 
+	@NotBlank
 	private String contact;
 
 	public String getText() {

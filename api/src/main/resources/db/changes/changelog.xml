@@ -13,6 +13,9 @@
 			<column name="name" type="VARCHAR(50)">
 				<constraints nullable="false" />
 			</column>
+			<column name="contact_number" type="VARCHAR(50)">
+				<constraints nullable="false" />
+			</column>
 		</createTable>
 	</changeSet>
 
@@ -23,6 +26,9 @@
 					primaryKeyName="pk_channel" />
 			</column>
 			<column name="name" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="api_path" type="VARCHAR(255)">
 				<constraints nullable="false" />
 			</column>
 			<column name="price" type="int" />
