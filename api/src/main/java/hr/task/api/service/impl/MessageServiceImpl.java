@@ -23,7 +23,7 @@ public class MessageServiceImpl implements MessageService {
 
 	@Transactional
 	@Override
-	public void send(Message message) {
+	public String send(Message message) {
 		Client client = clientRepository.findById(message.getClient().getId()).get();
 		Person person = personRepository.findById(message.getPerson().getId()).get();
 
@@ -32,12 +32,14 @@ public class MessageServiceImpl implements MessageService {
 
 		System.out.println("Client " + client.getName() + " sending message \"" + message.getText() + "\" to person "
 				+ person.getName() + " via " + minimumCostChannel.getName());
-		
+
 		System.out.println("Channel price: " + minimumCostChannel.getPrice());
 		System.out.println("Client price: " + client.getPrice());
-		
+
 		Integer profit = client.getPrice() - minimumCostChannel.getPrice();
 		System.out.println("Profit: " + profit);
+
+		return "Message sent via " + minimumCostChannel.getName();
 	}
 
 }

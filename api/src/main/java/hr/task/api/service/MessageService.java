@@ -4,6 +4,6 @@ import hr.task.api.model.Message;
 
 public interface MessageService {
 	
-	public void send(Message message);
+	public String send(Message message);
 
 }
