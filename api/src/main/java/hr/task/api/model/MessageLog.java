@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * @author ljuric
  *
  */
-public abstract class MessageLog {
+public class MessageLog {
 
 	private Map<String, AtomicLong> logTotal;
 	private Map<String, AtomicLong> currentTotalState;
@@ -30,7 +30,7 @@ public abstract class MessageLog {
 	 * @param key   log key
 	 * @param delta value to add
 	 */
-	protected void update(String key, long delta) {
+	protected void update(String key, int delta) {
 		logInterval.computeIfAbsent(key, k -> new AtomicLong()).addAndGet(delta);
 		logTotal.computeIfAbsent(key, k -> new AtomicLong()).addAndGet(delta);
 	}
@@ -68,7 +68,8 @@ public abstract class MessageLog {
 	 */
 	public Long getIntervalValue(String key) {
 		validateIntervalCopy();
-		return copyInterval.get(key).longValue();
+		AtomicLong value = copyInterval.get(key);
+		return getImmutableValue(value);
 	}
 
 	private void validateIntervalCopy() {
@@ -108,13 +109,18 @@ public abstract class MessageLog {
 	 */
 	public Long getPointInTimeTotalValue(String key) {
 		validateTotalCopy();
-		return currentTotalState.get(key).longValue();
+		AtomicLong value = currentTotalState.get(key);
+		return getImmutableValue(value);
 	}
 
 	private void validateTotalCopy() {
 		if (currentTotalState == null) {
 			throw new IllegalStateException("Call currentTotalState method first!");
 		}
+	}
+
+	private Long getImmutableValue(AtomicLong value) {
+		return value == null ? null : value.longValue();
 	}
 
 }

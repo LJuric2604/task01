@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import hr.task.api.exception.PersonWithoutChannelException;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,7 +30,11 @@ public class Person {
 	private Set<PersonChannel> personChannels;
 
 	public Channel getMinimumCostChannel() {
-		return personChannels.stream().map(PersonChannel::getChannel).min(PriceEntity::compareTo).get();
+		if (personChannels == null) {
+			throw new PersonWithoutChannelException();
+		}
+		return personChannels.stream().map(PersonChannel::getChannel).min(PriceEntity::compareTo)
+				.orElseThrow(PersonWithoutChannelException::new);
 	}
 
 }
