@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import hr.task.api.entity.Channel;
 import hr.task.api.entity.Client;
 import hr.task.api.entity.Person;
+import hr.task.api.exception.MissingClientException;
+import hr.task.api.exception.MissingPersonException;
 import hr.task.api.model.Message;
 import hr.task.api.repository.ClientRepository;
 import hr.task.api.repository.PersonRepository;
@@ -24,8 +26,8 @@ public class MessageServiceImpl implements MessageService {
 	@Transactional
 	@Override
 	public String send(Message message) {
-		Client client = clientRepository.findById(message.getClient().getId()).get();
-		Person person = personRepository.findById(message.getPerson().getId()).get();
+		Client client = clientRepository.findByName(message.getClient()).orElseThrow(MissingClientException::new);
+		Person person = personRepository.findByName(message.getPerson()).orElseThrow(MissingPersonException::new);
 		Channel minimumCostChannel = person.getMinimumCostChannel();
 
 		channelService.sendMessage(minimumCostChannel.getUri(), message.getText(), person.getContactNumber());

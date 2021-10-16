@@ -1,5 +1,7 @@
 package hr.task.client.service;
 
+import java.util.stream.IntStream;
+
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -27,10 +29,10 @@ public class MessageService {
 
 	private Thread[] createJobs() {
 		Thread[] jobs = new Thread[properties.getJobsPerTask()];
-		for (int i = 0; i < properties.getJobsPerTask(); i++) {
+		IntStream.range(0, properties.getJobsPerTask()).forEach(i -> {
 			Runnable job = new RandomMessageSender(client);
 			jobs[i] = new Thread(job);
-		}
+		});
 		return jobs;
 
 	}

@@ -12,11 +12,12 @@ import hr.task.api.entity.Client;
 import hr.task.api.entity.PriceEntity;
 import hr.task.api.repository.ChannelRepository;
 import hr.task.api.repository.ClientRepository;
+import hr.task.api.service.PricingService;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class PricingServiceImpl {
+public class RandomPricingService implements PricingService {
 
 	private final ClientRepository clientRepository;
 
@@ -24,6 +25,7 @@ public class PricingServiceImpl {
 
 	@Transactional
 	@Scheduled(fixedDelay = 5000)
+	@Override
 	public void channelPrices() {
 		List<Channel> channels = channelRepository.findAll();
 		channels.forEach(this::setRandomPriceValue);
@@ -32,6 +34,7 @@ public class PricingServiceImpl {
 
 	@Transactional
 	@Scheduled(fixedDelay = 5000)
+	@Override
 	public void clientPrices() {
 		List<Client> clients = clientRepository.findAll();
 		clients.forEach(this::setRandomPriceValue);
@@ -45,7 +48,7 @@ public class PricingServiceImpl {
 
 	private int getRandomNumberInInterval(int min, int max) {
 		Random random = new Random();
-		return random.nextInt(max+1 - min) + min;
+		return random.nextInt(max + 1 - min) + min;
 	}
 
 }

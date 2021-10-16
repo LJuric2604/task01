@@ -11,7 +11,7 @@
 					primaryKeyName="pk_person" />
 			</column>
 			<column name="name" type="VARCHAR(50)">
-				<constraints nullable="false" />
+				<constraints nullable="false" unique="true"/>
 			</column>
 			<column name="contact_number" type="VARCHAR(50)">
 				<constraints nullable="false" />
@@ -26,7 +26,7 @@
 					primaryKeyName="pk_channel" />
 			</column>
 			<column name="name" type="VARCHAR(255)">
-				<constraints nullable="false" />
+				<constraints nullable="false" unique="true" />
 			</column>
 			<column name="api_path" type="VARCHAR(255)">
 				<constraints nullable="false" />
@@ -42,7 +42,7 @@
 					primaryKeyName="pk_client" />
 			</column>
 			<column name="name" type="VARCHAR(255)">
-				<constraints nullable="false" />
+				<constraints nullable="false" unique="true" />
 			</column>
 			<column name="price" type="int" />
 		</createTable>
