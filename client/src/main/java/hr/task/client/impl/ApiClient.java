@@ -8,6 +8,12 @@ import org.springframework.web.client.RestTemplate;
 
 import hr.task.client.service.Message;
 
+/**
+ * Client for REST API.
+ * 
+ * @author ljuric
+ *
+ */
 @Component
 public class ApiClient {
 

@@ -4,6 +4,12 @@ import java.util.Random;
 
 import hr.task.client.impl.ApiClient;
 
+/**
+ * Message sender that randomly picks client and person.
+ * 
+ * @author ljuric
+ *
+ */
 public class RandomMessageSender extends MessageSender {
 
 	private final String[] clients;

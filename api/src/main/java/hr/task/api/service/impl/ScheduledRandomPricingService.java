@@ -15,9 +15,15 @@ import hr.task.api.repository.ClientRepository;
 import hr.task.api.service.PricingService;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Change pricing every 5 seconds with random values.
+ * 
+ * @author ljuric
+ *
+ */
 @Service
 @RequiredArgsConstructor
-public class RandomPricingService implements PricingService {
+public class ScheduledRandomPricingService implements PricingService {
 
 	private final ClientRepository clientRepository;
 

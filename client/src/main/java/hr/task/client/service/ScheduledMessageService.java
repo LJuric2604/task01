@@ -10,9 +10,15 @@ import hr.task.client.ClientProperties;
 import hr.task.client.impl.ApiClient;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Scheduled task that sends 10 async messages per second.
+ * 
+ * @author ljuric
+ *
+ */
 @Service
 @RequiredArgsConstructor
-public class MessageService {
+public class ScheduledMessageService {
 
 	private final ClientProperties properties;
 
