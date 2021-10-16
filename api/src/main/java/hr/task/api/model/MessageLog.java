@@ -1,9 +1,13 @@
 package hr.task.api.model;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
+
+import lombok.AccessLevel;
+import lombok.Getter;
 
 /**
  * Class for managing log state. Can be used to get last interval log state and
@@ -18,6 +22,12 @@ public class MessageLog {
 	private Map<String, AtomicLong> currentTotalState;
 	private Map<String, AtomicLong> logInterval;
 	private Map<String, AtomicLong> copyInterval;
+	
+	@Getter(AccessLevel.PROTECTED)
+	private LocalDateTime lastIntervalTimestamp;
+	
+	@Getter(AccessLevel.PROTECTED)
+	private LocalDateTime lastPointInTimeTimestamp;
 
 	public MessageLog() {
 		logInterval = new ConcurrentHashMap<>();
@@ -43,6 +53,7 @@ public class MessageLog {
 	public void finishInterval() {
 		copyInterval = logInterval;
 		logInterval = new ConcurrentHashMap<>();
+		lastIntervalTimestamp = LocalDateTime.now();
 	}
 
 	/**
@@ -85,6 +96,7 @@ public class MessageLog {
 	 */
 	public void pointInTimeTotalState() {
 		currentTotalState = new ConcurrentHashMap<>(logTotal);
+		lastPointInTimeTimestamp = LocalDateTime.now();
 	}
 
 	/**

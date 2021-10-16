@@ -1,16 +1,16 @@
 package hr.task.api.service.impl;
 
-import java.time.LocalDateTime;
-
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import hr.task.api.entity.Channel;
 import hr.task.api.entity.Client;
+import hr.task.api.entity.CompanyLogData;
 import hr.task.api.entity.Person;
 import hr.task.api.model.CompanyMessageLog;
-import hr.task.api.model.CounterMessageLog;
-import hr.task.api.model.MessageLog;
+import hr.task.api.model.PerMessageLog;
+import hr.task.api.repository.CompanyLogDataRepository;
+import hr.task.api.repository.PerMessageLogDataRepository;
 import hr.task.api.service.LoggingService;
 
 /**
@@ -22,11 +22,17 @@ import hr.task.api.service.LoggingService;
 @Service
 public class ScheduledLoggingServiceImpl implements LoggingService {
 
-	private CounterMessageLog perMessageLog;
+	private final PerMessageLogDataRepository perMessageLogDataRepository;
+	private final CompanyLogDataRepository companyLogDataRepository;
+
+	private PerMessageLog perMessageLog;
 	private CompanyMessageLog companyLog;
 
-	public ScheduledLoggingServiceImpl() {
-		perMessageLog = new CounterMessageLog();
+	public ScheduledLoggingServiceImpl(PerMessageLogDataRepository perMessageLogDataRepository,
+			CompanyLogDataRepository companyLogDataRepository) {
+		this.perMessageLogDataRepository = perMessageLogDataRepository;
+		this.companyLogDataRepository = companyLogDataRepository;
+		perMessageLog = new PerMessageLog();
 		companyLog = new CompanyMessageLog();
 	}
 
@@ -43,36 +49,39 @@ public class ScheduledLoggingServiceImpl implements LoggingService {
 	@Scheduled(fixedDelay = 5000)
 	@Override
 	public void logInterval() {
-		finishInterval(perMessageLog);
-		finishInterval(companyLog);
+		perMessageLog.finishInterval();
+		companyLog.finishInterval();
+		savePerMessageIntervalLogs();
+		saveCompanyIntervalLogs();
 	}
 
-	private void finishInterval(MessageLog messageLog) {
-		messageLog.finishInterval();
-		for (String key : messageLog.getIntervalKeys()) {
-			Long value = messageLog.getIntervalValue(key);
-			logData(key, value);
-		}
+	private void saveCompanyIntervalLogs() {
+		CompanyLogData logData = companyLog.getIntervalData();
+		companyLogDataRepository.save(logData);
+	}
+
+	private void savePerMessageIntervalLogs() {
+		perMessageLog.getIntervalKeys().stream().map(perMessageLog::getIntervalData)
+				.forEach(perMessageLogDataRepository::save);
 	}
 
 	@Scheduled(fixedDelay = 5000)
 	@Override
 	public void logTotal() {
-		currentTotal(perMessageLog);
-		currentTotal(companyLog);
+		perMessageLog.pointInTimeTotalState();
+		companyLog.pointInTimeTotalState();
+		savePerMessagePointInTimeLogs();
+		saveCompanyPointInTimeLogs();
 	}
 
-	private void currentTotal(MessageLog messageLog) {
-		messageLog.pointInTimeTotalState();
-		for (String key : messageLog.getPointInTimeTotalKeys()) {
-			Long value = messageLog.getPointInTimeTotalValue(key);
-			logData("Total " + key, value);
-		}
+	private void saveCompanyPointInTimeLogs() {
+		CompanyLogData logData = companyLog.getPointInTimeData();
+		companyLogDataRepository.save(logData);
 	}
 
-	private void logData(String key, Long value) {
-		LocalDateTime now = LocalDateTime.now();
-		System.out.println(now + "\t" + key + " = " + value);
+	private void savePerMessagePointInTimeLogs() {
+		perMessageLog.getPointInTimeTotalKeys().stream().map(perMessageLog::getPointInTimeData)
+				.forEach(perMessageLogDataRepository::save);
 	}
 
 }
