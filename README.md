@@ -36,7 +36,7 @@ As part of this solution there are 3 Spring Boot projects and 2 external solutio
 2. run: docker compose up
 3. Use one of this instructions
     * build all 3 Spring Boot projects - position yourself in their root and run ./mvnw install
-    * open your favorite IDE and run them in next order (4,5,6) from there -> skip to the testing part
+    * open your favorite IDE, import as maven projects,update maven and run them in next order (4,5,6) from there -> skip to the testing part
 4. Run channel.api -> java -jar {channel_build_name}.jar
 5. Run api -> java -jar {api_build_name}.jar
 6. Run client -> java -jar {client_build_name}.jar
