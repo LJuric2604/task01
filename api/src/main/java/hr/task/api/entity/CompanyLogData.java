@@ -1,7 +1,5 @@
 package hr.task.api.entity;
 
-import java.time.LocalDateTime;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 
@@ -28,6 +26,6 @@ public class CompanyLogData {
 
 	private boolean total;
 
-	private LocalDateTime timestamp;
+	private Long timestamp;
 
 }

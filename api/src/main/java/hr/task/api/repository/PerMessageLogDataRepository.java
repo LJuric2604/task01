@@ -4,6 +4,7 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
 
 import hr.task.api.entity.PerMessageLogData;
 
-public interface PerMessageLogDataRepository extends ElasticsearchRepository<PerMessageLogData, String> {
+public interface PerMessageLogDataRepository
+		extends ElasticsearchRepository<PerMessageLogData, String>, PerMessageLogDataCustomRepository {
 
 }

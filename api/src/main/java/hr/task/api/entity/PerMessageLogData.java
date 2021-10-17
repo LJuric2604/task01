@@ -1,7 +1,5 @@
 package hr.task.api.entity;
 
-import java.time.LocalDateTime;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 
@@ -26,6 +24,6 @@ public class PerMessageLogData {
 
 	private boolean total;
 
-	private LocalDateTime timestamp;
+	private Long timestamp;
 
 }

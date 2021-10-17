@@ -57,7 +57,9 @@ public class ScheduledLoggingServiceImpl implements LoggingService {
 
 	private void saveCompanyIntervalLogs() {
 		CompanyLogData logData = companyLog.getIntervalData();
-		companyLogDataRepository.save(logData);
+		if (logData != null) {
+			companyLogDataRepository.save(logData);
+		}
 	}
 
 	private void savePerMessageIntervalLogs() {
@@ -76,7 +78,9 @@ public class ScheduledLoggingServiceImpl implements LoggingService {
 
 	private void saveCompanyPointInTimeLogs() {
 		CompanyLogData logData = companyLog.getPointInTimeData();
-		companyLogDataRepository.save(logData);
+		if (logData != null) {
+			companyLogDataRepository.save(logData);
+		}
 	}
 
 	private void savePerMessagePointInTimeLogs() {

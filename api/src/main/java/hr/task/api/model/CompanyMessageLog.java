@@ -26,6 +26,9 @@ public class CompanyMessageLog extends MessageLog {
 		final Long cost = getIntervalValue(COST);
 		final Long revenue = getIntervalValue(REVENUE);
 		final Long profit = getIntervalValue(PROFIT);
+		if (cost == null && revenue == null && profit == null) {
+			return null;
+		}
 		return CompanyLogData.builder().uid(UUID.randomUUID().toString()).timestamp(getLastIntervalTimestamp())
 				.total(false).cost(cost).revenue(revenue).profit(profit).build();
 	}
@@ -34,6 +37,9 @@ public class CompanyMessageLog extends MessageLog {
 		final Long cost = getPointInTimeTotalValue(COST);
 		final Long revenue = getPointInTimeTotalValue(REVENUE);
 		final Long profit = getPointInTimeTotalValue(PROFIT);
+		if (cost == null && revenue == null && profit == null) {
+			return null;
+		}
 		return CompanyLogData.builder().uid(UUID.randomUUID().toString()).timestamp(getLastPointInTimeTimestamp())
 				.total(true).cost(cost).revenue(revenue).profit(profit).build();
 	}
