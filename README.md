@@ -43,6 +43,7 @@ As part of this solution there are 3 Spring Boot projects and 2 external solutio
 
 ### Testing
 Swagger documentation is here : http://localhost:8080/api/swagger-ui.html
+
 Date format is standard java ISO_DATE_TIME: "yyyy-MM-dd'T'HH:mm:ss.SSSXXX" , for example "2021-10-17T16:22:20.000"
 
 There are 3 valid authentication users in api.
