@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import hr.task.api.common.DateUtils;
 import hr.task.api.model.CompanyResponse;
 import hr.task.api.repository.CompanyLogDataRepository;
-import hr.task.api.repository.impl.CompanyLogDataCustomRepositoryImpl;
+import hr.task.api.repository.impl.LogDataRepositoryImpl;
 import hr.task.api.service.CompanyService;
 import lombok.RequiredArgsConstructor;
 
@@ -33,9 +33,9 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	private CompanyResponse mapAggregations(Aggregations aggregations) {
-		final Sum revenue = aggregations.get(CompanyLogDataCustomRepositoryImpl.AGG_REVENUE);
-		final Sum cost = aggregations.get(CompanyLogDataCustomRepositoryImpl.AGG_COST);
-		final Sum profit = aggregations.get(CompanyLogDataCustomRepositoryImpl.AGG_PROFIT);
+		final Sum revenue = aggregations.get(LogDataRepositoryImpl.AGG_REVENUE);
+		final Sum cost = aggregations.get(LogDataRepositoryImpl.AGG_COST);
+		final Sum profit = aggregations.get(LogDataRepositoryImpl.AGG_PROFIT);
 
 		return new CompanyResponse((long) revenue.getValue(), (long) cost.getValue(), (long) profit.getValue());
 	}
