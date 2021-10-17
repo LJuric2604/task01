@@ -15,14 +15,6 @@ public interface LoggingService {
 	 */
 	void updateMessageLog(Client client, Person person, Channel channel);
 
-	/**
-	 * Log interval state.
-	 */
-	void logInterval();
-
-	/**
-	 * Log current total state.
-	 */
-	void logTotal();
+	void log();
 
 }

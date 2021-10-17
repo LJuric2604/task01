@@ -12,7 +12,7 @@ public class PerMessageLog extends MessageLog {
 
 	public PerMessageLogData getIntervalData(String key) {
 		final Long value = getIntervalValue(key);
-		return PerMessageLogData.builder().uid(UUID.randomUUID().toString()).timestamp(getLastIntervalTimestamp())
+		return PerMessageLogData.builder().uid(UUID.randomUUID().toString()).timestamp(getLastPointInTimeTimestamp())
 				.total(false).key(key).value(value).build();
 	}
 

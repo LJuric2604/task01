@@ -29,7 +29,7 @@ public class CompanyMessageLog extends MessageLog {
 		if (cost == null && revenue == null && profit == null) {
 			return null;
 		}
-		return CompanyLogData.builder().uid(UUID.randomUUID().toString()).timestamp(getLastIntervalTimestamp())
+		return CompanyLogData.builder().uid(UUID.randomUUID().toString()).timestamp(getLastPointInTimeTimestamp())
 				.total(false).cost(cost).revenue(revenue).profit(profit).build();
 	}
 

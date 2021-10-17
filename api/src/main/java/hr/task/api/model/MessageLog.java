@@ -3,7 +3,6 @@ package hr.task.api.model;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
 
 import hr.task.api.common.DateUtils;
 import lombok.AccessLevel;
@@ -18,13 +17,10 @@ import lombok.Getter;
  */
 public class MessageLog {
 
-	private Map<String, AtomicLong> logTotal;
-	private Map<String, AtomicLong> currentTotalState;
-	private Map<String, AtomicLong> logInterval;
-	private Map<String, AtomicLong> copyInterval;
-
-	@Getter(AccessLevel.PROTECTED)
-	private Long lastIntervalTimestamp;
+	private Map<String, Long> logTotal;
+	private Map<String, Long> currentTotalState;
+	private Map<String, Long> logInterval;
+	private Map<String, Long> copyInterval;
 
 	@Getter(AccessLevel.PROTECTED)
 	private Long lastPointInTimeTimestamp;
@@ -41,24 +37,24 @@ public class MessageLog {
 	 * @param delta value to add
 	 */
 	protected void update(String key, int delta) {
-		logInterval.computeIfAbsent(key, k -> new AtomicLong()).addAndGet(delta);
-		logTotal.computeIfAbsent(key, k -> new AtomicLong()).addAndGet(delta);
+		logInterval.compute(key, (k, v) -> v == null ? delta : v + delta);
+		logTotal.compute(key, (k, v) -> v == null ? delta : v + delta);
 	}
 
 	/**
-	 * Method to call when interval is finished. Call this method if you need
-	 * current interval state. This method is naturally used with methods
-	 * {@link #getIntervalKeys()} and {@link #getIntervalValue(String)}.
+	 * Call this method when point in time log state is wanted. Used both for
+	 * interval and total log states.
 	 */
-	public void finishInterval() {
-		copyInterval = logInterval;
+	public void pointInTimeState() {
+		currentTotalState = new ConcurrentHashMap<>(logTotal);
+		copyInterval = new ConcurrentHashMap<>(logInterval);
 		logInterval = new ConcurrentHashMap<>();
-		lastIntervalTimestamp = DateUtils.currentTimestamp();
+		lastPointInTimeTimestamp = DateUtils.currentTimestamp();
 	}
 
 	/**
 	 * Get keys for the last interval log state. Must be called after
-	 * {@link #finishInterval()} method.
+	 * {@link #pointInTimeState()} method.
 	 * 
 	 * @return log state keys
 	 * @throws IllegalStateException if there is no last interval log state
@@ -70,7 +66,7 @@ public class MessageLog {
 
 	/**
 	 * Get the value by key for the last interval log state. Must be called after
-	 * {@link #finishInterval()} method. To get log state keys call
+	 * {@link #pointInTimeState()} method. To get log state keys call
 	 * {@link #getIntervalKeys()}
 	 * 
 	 * @param key log state key
@@ -79,24 +75,13 @@ public class MessageLog {
 	 */
 	public Long getIntervalValue(String key) {
 		validateIntervalCopy();
-		AtomicLong value = copyInterval.get(key);
-		return getImmutableValue(value);
+		return copyInterval.get(key);
 	}
 
 	private void validateIntervalCopy() {
 		if (copyInterval == null) {
 			throw new IllegalStateException("Call finishInterval method first!");
 		}
-	}
-
-	/**
-	 * Call this method when point in time total log state is wanted. This method is
-	 * naturally used with methods {@link #getPointInTimeTotalKeys()} and
-	 * {@link #getPointInTimeTotalValue(String)}.
-	 */
-	public void pointInTimeTotalState() {
-		currentTotalState = new ConcurrentHashMap<>(logTotal);
-		lastPointInTimeTimestamp = DateUtils.currentTimestamp();
 	}
 
 	/**
@@ -121,18 +106,13 @@ public class MessageLog {
 	 */
 	public Long getPointInTimeTotalValue(String key) {
 		validateTotalCopy();
-		AtomicLong value = currentTotalState.get(key);
-		return getImmutableValue(value);
+		return currentTotalState.get(key);
 	}
 
 	private void validateTotalCopy() {
 		if (currentTotalState == null) {
 			throw new IllegalStateException("Call currentTotalState method first!");
 		}
-	}
-
-	private Long getImmutableValue(AtomicLong value) {
-		return value == null ? null : value.longValue();
 	}
 
 }

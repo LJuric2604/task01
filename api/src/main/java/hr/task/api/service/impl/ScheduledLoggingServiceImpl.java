@@ -46,15 +46,6 @@ public class ScheduledLoggingServiceImpl implements LoggingService {
 		companyLog.updateProfit(client.getPrice(), channel.getPrice());
 	}
 
-	@Scheduled(fixedDelay = 5000)
-	@Override
-	public void logInterval() {
-		perMessageLog.finishInterval();
-		companyLog.finishInterval();
-		savePerMessageIntervalLogs();
-		saveCompanyIntervalLogs();
-	}
-
 	private void saveCompanyIntervalLogs() {
 		CompanyLogData logData = companyLog.getIntervalData();
 		if (logData != null) {
@@ -67,13 +58,23 @@ public class ScheduledLoggingServiceImpl implements LoggingService {
 				.forEach(perMessageLogDataRepository::save);
 	}
 
-	@Scheduled(fixedDelay = 5000)
 	@Override
-	public void logTotal() {
-		perMessageLog.pointInTimeTotalState();
-		companyLog.pointInTimeTotalState();
+	@Scheduled(fixedDelay = 5000)
+	public void log() {
+		perMessageLog.pointInTimeState();
+		companyLog.pointInTimeState();
+		logInterval();
+		logTotal();
+	}
+
+	private void logTotal() {
 		savePerMessagePointInTimeLogs();
 		saveCompanyPointInTimeLogs();
+	}
+
+	private void logInterval() {
+		savePerMessageIntervalLogs();
+		saveCompanyIntervalLogs();
 	}
 
 	private void saveCompanyPointInTimeLogs() {

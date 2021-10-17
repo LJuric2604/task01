@@ -47,7 +47,7 @@ public class MessageLogTest {
 	public void givenMessageLogWithoutKeyWhenGetInternalValueExpectNull() {
 		final var log = new MessageLog();
 		log.update("key", 1);
-		log.finishInterval();
+		log.pointInTimeState();
 		Long value = log.getIntervalValue("not_key");
 		assertThat(value).isNull();
 	}
@@ -56,7 +56,7 @@ public class MessageLogTest {
 	public void givenMessageLogWithoutKeyWhenGetPointInTimeValueExpectNull() {
 		final var log = new MessageLog();
 		log.update("key", 1);
-		log.pointInTimeTotalState();
+		log.pointInTimeState();
 		Long value = log.getPointInTimeTotalValue("not_key");
 		assertThat(value).isNull();
 	}
@@ -66,7 +66,7 @@ public class MessageLogTest {
 	public void givenMessageLogWhenIntervalFinishedExpectValue(int value) {
 		final var log = new MessageLog();
 		log.update("key", value);
-		log.finishInterval();
+		log.pointInTimeState();
 		Long expectedValue = log.getIntervalValue("key");
 		assertThat(expectedValue).isEqualTo(value);
 	}
@@ -76,7 +76,7 @@ public class MessageLogTest {
 	public void givenMessageLogWhenPointInTimeExpectValue(int value) {
 		final var log = new MessageLog();
 		log.update("key", value);
-		log.pointInTimeTotalState();
+		log.pointInTimeState();
 		Long expectedValue = log.getPointInTimeTotalValue("key");
 		assertThat(expectedValue).isEqualTo(value);
 	}
@@ -88,7 +88,7 @@ public class MessageLogTest {
 		for (String key : keys) {
 			log.update(key, 1);
 		}
-		log.finishInterval();
+		log.pointInTimeState();
 		Set<String> expectedKeys = log.getIntervalKeys();
 		assertThat(expectedKeys).containsExactly(keys);
 	}
@@ -100,7 +100,7 @@ public class MessageLogTest {
 		for (String key : keys) {
 			log.update(key, 1);
 		}
-		log.pointInTimeTotalState();
+		log.pointInTimeState();
 		Set<String> expectedKeys = log.getPointInTimeTotalKeys();
 		assertThat(expectedKeys).containsExactly(keys);
 	}
@@ -114,7 +114,7 @@ public class MessageLogTest {
 			log.update("key", value);
 			sum += value;
 		}
-		log.finishInterval();
+		log.pointInTimeState();
 		Long expectedValue = log.getIntervalValue("key");
 		assertThat(expectedValue).isEqualTo(sum);
 	}
@@ -128,7 +128,7 @@ public class MessageLogTest {
 			log.update("key", value);
 			sum += value;
 		}
-		log.pointInTimeTotalState();
+		log.pointInTimeState();
 		Long expectedValue = log.getPointInTimeTotalValue("key");
 		assertThat(expectedValue).isEqualTo(sum);
 	}
@@ -140,13 +140,13 @@ public class MessageLogTest {
 		for (int value : valuesFirst) {
 			log.update("key", value);
 		}
-		log.finishInterval();
+		log.pointInTimeState();
 		long sum = 0;
 		for (int value : valuesSecond) {
 			log.update("key", value);
 			sum += value;
 		}
-		log.finishInterval();
+		log.pointInTimeState();
 		Long expectedValue = log.getIntervalValue("key");
 		assertThat(expectedValue).isEqualTo(sum);
 	}
@@ -160,12 +160,12 @@ public class MessageLogTest {
 			log.update("key", value);
 			sum += value;
 		}
-		log.pointInTimeTotalState();
+		log.pointInTimeState();
 		for (int value : valuesSecond) {
 			log.update("key", value);
 			sum += value;
 		}
-		log.pointInTimeTotalState();
+		log.pointInTimeState();
 		Long expectedValue = log.getPointInTimeTotalValue("key");
 		assertThat(expectedValue).isEqualTo(sum);
 	}
@@ -196,7 +196,7 @@ public class MessageLogTest {
 
 		anotherTask.join();
 
-		log.finishInterval();
+		log.pointInTimeState();
 		Long expectedValue = log.getIntervalValue("key");
 		assertThat(expectedValue).isEqualTo(sum.longValue());
 	}
@@ -227,7 +227,7 @@ public class MessageLogTest {
 
 		anotherTask.join();
 
-		log.pointInTimeTotalState();
+		log.pointInTimeState();
 		Long expectedValue = log.getPointInTimeTotalValue("key");
 		assertThat(expectedValue).isEqualTo(sum.longValue());
 	}
