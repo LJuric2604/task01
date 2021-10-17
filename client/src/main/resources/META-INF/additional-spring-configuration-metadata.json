@@ -8,5 +8,20 @@
     "name": "api.client.messages.path",
     "type": "java.lang.String",
     "description": "A description for 'api.client.messages.path'"
+  },
+  {
+    "name": "api.client.username",
+    "type": "java.lang.String",
+    "description": "A description for 'api.client.username'"
+  },
+  {
+    "name": "api.client.password",
+    "type": "java.lang.String",
+    "description": "A description for 'api.client.password'"
+  },
+  {
+    "name": "jobs.per.task",
+    "type": "java.lang.String",
+    "description": "A description for 'jobs.per.task'"
   }
 ]}

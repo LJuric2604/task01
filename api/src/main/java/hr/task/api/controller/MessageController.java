@@ -1,5 +1,6 @@
 package hr.task.api.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +17,9 @@ public class MessageController {
 
 	private final MessageService messageService;
 
+	@PreAuthorize("hasRole('CLIENT')")
 	@PostMapping("/send")
-	private String send(@RequestBody MessageReq message) {
+	public String send(@RequestBody MessageReq message) {
 		return messageService.send(message);
 	}
 

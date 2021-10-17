@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import hr.task.api.model.CompanyResponse;
+import hr.task.api.security.AdminRole;
 import hr.task.api.service.CompanyService;
 import lombok.RequiredArgsConstructor;
 
+@AdminRole
 @RestController
 @RequestMapping("/admin/company")
 @RequiredArgsConstructor

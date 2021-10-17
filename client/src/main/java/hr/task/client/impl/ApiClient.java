@@ -2,7 +2,7 @@ package hr.task.client.impl;
 
 import java.net.URI;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -19,14 +19,11 @@ public class ApiClient {
 
 	private final RestTemplate restTemplate;
 
-	@Value("${api.client.root.path}")
-	private String rootPath;
+	private final ApiClientProperties properties;
 
-	@Value("${api.client.messages.path}")
-	private String messagesPath;
-
-	public ApiClient() {
-		restTemplate = new RestTemplate();
+	public ApiClient(RestTemplateBuilder builder, ApiClientProperties properties) {
+		this.properties = properties;
+		restTemplate = builder.basicAuthentication(properties.getUsername(), properties.getPassword()).build();
 	}
 
 	public String sendMessage(Message message) {
@@ -35,7 +32,7 @@ public class ApiClient {
 	}
 
 	private URI createBaseMessageURI() {
-		final String uri = rootPath + messagesPath;
+		final String uri = properties.getRootPath() + properties.getMessagesPath();
 		return URI.create(uri);
 	}
 
