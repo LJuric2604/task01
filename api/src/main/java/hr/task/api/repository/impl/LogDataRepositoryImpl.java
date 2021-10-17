@@ -10,6 +10,12 @@ import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
 
+/**
+ * Basic class with common methods for log custom repository implementations.
+ * 
+ * @author ljuric
+ *
+ */
 public class LogDataRepositoryImpl {
 
 	protected static final String FIELD_KEY = "key";

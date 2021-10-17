@@ -23,7 +23,7 @@ public class CompanyController {
 
 	@GetMapping("/total")
 	public CompanyResponse getTotalData(
-			@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime timestamp) {
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime timestamp) {
 		return companyService.getTotalData(timestamp);
 	}
 

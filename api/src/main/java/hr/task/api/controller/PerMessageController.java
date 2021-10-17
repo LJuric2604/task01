@@ -23,7 +23,7 @@ public class PerMessageController {
 
 	@GetMapping("/total")
 	public PerMessageResponse getTotalData(@RequestParam String key,
-			@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime timestamp) {
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime timestamp) {
 		return perMessageService.getTotalData(key, timestamp);
 	}
 
